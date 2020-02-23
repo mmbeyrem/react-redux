@@ -6,7 +6,13 @@
     "start:dev": "webpack-dev-server --config webpack.config.dev.js --port 3000",
     "prestart:api": "node tools/createMockDb.js",
     "start:api": "node tools/apiServer.js",
-    "test": "jest"
+    "test": "jest",
+    "clean:build": "rimraf ./build && mkdir build ",
+    "tes:ci": "jest",
+    "prebuild": "run-p clean:build test:ci",
+    "build": "webpack-dev-server --config webpack.config.prod.js --port 3000",
+    "postbuild": "run-p start:api server:build",
+    "server:build": "http-servre ./build"
   },
   "jest": {
     "setupFiles": [
